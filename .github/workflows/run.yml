@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Run
-      run: dotnet run --no-build --verbosity normal --configuration Release
+      run: dotnet run --no-build --verbosity normal --configuration Release --exporters json
