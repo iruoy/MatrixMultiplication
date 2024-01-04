@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1704337906270,
+  "lastUpdate": 1704337917337,
   "repoUrl": "https://github.com/iruoy/MatrixMultiplication",
   "entries": {
     "MatrixMultiplication": [
@@ -72,6 +72,42 @@ window.BENCHMARK_DATA = {
             "value": 1254854392.5714285,
             "unit": "ns",
             "range": "± 3536080.477839786"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "youri@wijnands.me",
+            "name": "Youri Wijnands",
+            "username": "iruoy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "093f2d5d996c89800069bf297ed536646bac1ee5",
+          "message": "Update benchmark.yml",
+          "timestamp": "2024-01-04T04:09:53+01:00",
+          "tree_id": "7b72951e1c5b8dc46d9a911f12ba023d039111c8",
+          "url": "https://github.com/iruoy/MatrixMultiplication/commit/093f2d5d996c89800069bf297ed536646bac1ee5"
+        },
+        "date": 1704337916469,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "MatrixMultiplication.MatrixMultiplication.Multiply",
+            "value": 2169930821.285714,
+            "unit": "ns",
+            "range": "± 20271865.565146547"
+          },
+          {
+            "name": "MatrixMultiplication.MatrixMultiplication.ParallelMultiply",
+            "value": 1255512421.1333334,
+            "unit": "ns",
+            "range": "± 4850263.635583841"
           }
         ]
       }
