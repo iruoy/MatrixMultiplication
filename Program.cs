@@ -3,6 +3,7 @@ using BenchmarkDotNet.Running;
 
 namespace MatrixMultiplication;
 
+[JsonExporter]
 public class MatrixMultiplication
 {
     private const int N = 1500;
