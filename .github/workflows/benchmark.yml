@@ -42,7 +42,7 @@ jobs:
         comment-on-alert: true
         summary-always: true
         alert-comment-cc-users: '@iruoy'
-    - name: Store benchmark result
+    - name: Store benchmark result (gh-pages)
       uses: benchmark-action/github-action-benchmark@v1
       with:
         name: MatrixMultiplication
@@ -50,5 +50,3 @@ jobs:
         output-file-path: BenchmarkDotNet.Artifacts/results/MatrixMultiplication.MatrixMultiplication-report.json
         github-token: ${{ secrets.GITHUB_TOKEN }}
         auto-push: true
-    - name: Push benchmark result
-      run: git push 'https://you:${{ secrets.GITHUB_TOKEN }}@github.com/iruoy/MatrixMultiplication.git' gh-pages:gh-pages
