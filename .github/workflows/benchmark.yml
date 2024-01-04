@@ -1,4 +1,4 @@
-name: Run
+name: Benchmark
 
 on:
   push:
@@ -26,3 +26,15 @@ jobs:
       run: dotnet build --no-restore --configuration Release
     - name: Run
       run: dotnet run --no-build --verbosity normal --configuration Release
+    - name: Download previous benchmark data
+      uses: actions/cache@v3
+      with:
+        path: ./cache
+        key: ${{ runner.os }}-benchmark
+    - name: Store benchmark result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        tool: 'benchmarkdotnet'
+        output-file-path: BenchmarkDotNet.Artifacts/results/MatrixMultiplication.MatrixMultiplication-report.json
+        external-data-json-path: ./cache/benchmark-data.json
+        fail-on-alert: true
