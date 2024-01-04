@@ -1,86 +1,85 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-namespace MatrixMultiplication
+namespace MatrixMultiplication;
+
+public class MatrixMultiplication
 {
-    public class MatrixMultiplication
+    private const int N = 1500;
+
+    private readonly double[][] _a = Generate();
+    private readonly double[][] _b = Generate();
+
+    private static double[][] Generate()
     {
-        private const int N = 1500;
+        const double tmp = 1.0 / N / N;
+        var a = new double[N][];
 
-        private readonly double[][] a = Generate();
-        private readonly double[][] b = Generate();
-
-        private static double[][] Generate()
+        for (var i = 0; i < N; ++i)
         {
-            const double tmp = 1.0 / N / N;
-            var a = new double[N][];
+            a[i] = new double[N];
 
-            for (var i = 0; i < N; ++i)
-            {
-                a[i] = new double[N];
-
-                for (var j = 0; j < N; ++j)
-                    a[i][j] = tmp * (i - j) * (i + j);
-            }
-
-            return a;
+            for (var j = 0; j < N; ++j)
+                a[i][j] = tmp * (i - j) * (i + j);
         }
 
-        private static double[][] Multiply(double[][] a, double[][] b)
-        {
-            var c = new double[N][];
-
-            for (var i = 0; i < N; i++)
-            {
-                c[i] = new double[N];
-                var ci = c[i];
-
-                for (var k = 0; k < N; ++k)
-                {
-                    var aik = a[i][k];
-                    var bk = b[k];
-
-                    for (var j = 0; j < N; ++j)
-                        ci[j] += aik * bk[j];
-                }
-            }
-
-            return c;
-        }
-
-        private static double[][] ParallelMultiply(double[][] a, double[][] b)
-        {
-            var c = new double[N][];
-
-            Parallel.For(0, N, i => {
-                c[i] = new double[N];
-                var ci = c[i];
-
-                for (var k = 0; k < N; ++k)
-                {
-                    var aik = a[i][k];
-                    var bk = b[k];
-
-                    for (var j = 0; j < N; ++j)
-                        ci[j] += aik * bk[j];
-                }
-            });
-
-            return c;
-        }
-
-        [Benchmark]
-        public double[][] Multiply() => Multiply(a, b);
-
-        [Benchmark]
-        public double[][] ParallelMultiply() => ParallelMultiply(a, b);
+        return a;
     }
 
-    public class Program
+    private static double[][] Multiply(double[][] a, double[][] b)
     {
-        public static void Main()
+        var c = new double[N][];
+
+        for (var i = 0; i < N; i++)
         {
-            var summary = BenchmarkRunner.Run<MatrixMultiplication>();
+            c[i] = new double[N];
+            var ci = c[i];
+
+            for (var k = 0; k < N; ++k)
+            {
+                var aik = a[i][k];
+                var bk = b[k];
+
+                for (var j = 0; j < N; ++j)
+                    ci[j] += aik * bk[j];
+            }
         }
+
+        return c;
+    }
+
+    private static double[][] ParallelMultiply(double[][] a, double[][] b)
+    {
+        var c = new double[N][];
+
+        Parallel.For(0, N, i => {
+            c[i] = new double[N];
+            var ci = c[i];
+
+            for (var k = 0; k < N; ++k)
+            {
+                var aik = a[i][k];
+                var bk = b[k];
+
+                for (var j = 0; j < N; ++j)
+                    ci[j] += aik * bk[j];
+            }
+        });
+
+        return c;
+    }
+
+    [Benchmark]
+    public double[][] Multiply() => Multiply(_a, _b);
+
+    [Benchmark]
+    public double[][] ParallelMultiply() => ParallelMultiply(_a, _b);
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        BenchmarkRunner.Run<MatrixMultiplication>();
     }
 }
